@@ -5,6 +5,10 @@ import { COLORS } from '../../../constants/theme'
 import styles from './styles'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../../App';
+import axios from "axios";
+
+const API_URL = "http://172.27.16.1:8080/register";
+
 
 type UserPhoneProps = NativeStackScreenProps<RootStackParamList, 'UserPhone'>;
 
@@ -12,6 +16,22 @@ const UserInfo = ({ navigation }: UserPhoneProps) => {
 
     const [userPhoneNumber, setUserPhoneNumber] = useState<string>('')
     const [isEnabled, setIsEnabled] = useState<boolean>(false)
+    const [posts, setPosts] = useState([]);
+
+    const createPost = async () => {
+        navigation.navigate('VerifyOtp', { phoneNumber: userPhoneNumber });
+        try {
+            const newPost = {
+                name: "New name",
+                phn: `+91${userPhoneNumber}`
+            };
+
+            const response = await axios.post(API_URL, newPost);
+            console.log("Post Created:", response.data);
+        } catch (error) {
+            console.error("Error creating post:", error);
+        }
+    };
 
     useEffect(() => {
         if (userPhoneNumber.length === 10) {
@@ -40,7 +60,7 @@ const UserInfo = ({ navigation }: UserPhoneProps) => {
                     {UserPhoneText.ConfirmText}
                 </Text>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('VerifyOtp', { phoneNumber: userPhoneNumber })} style={isEnabled ? styles.enabledTouchableViewBg : styles.disabledTouchableViewBg}>
+            <TouchableOpacity onPress={() => createPost()} style={isEnabled ? styles.enabledTouchableViewBg : styles.disabledTouchableViewBg}>
                 <Text style={isEnabled ? styles.enabledRegisterText : styles.disabledRegisterText}>{UserInfoText.Next}</Text>
             </TouchableOpacity>
         </View>
