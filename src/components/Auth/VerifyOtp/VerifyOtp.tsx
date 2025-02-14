@@ -7,6 +7,7 @@ import styles from './styles'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../../App';
 import { useTimer } from 'react-timer-hook';
+import { useSelector } from "react-redux";
 
 type VerifyOtpProps = NativeStackScreenProps<RootStackParamList, 'VerifyOtp'>;
 
@@ -16,7 +17,8 @@ const VerifyOtp = ({ navigation, route }: VerifyOtpProps) => {
     const inputs = useRef<TextInput[]>([]);
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
     const [reSendCtaShow, setResendCtaShow] = useState(false);
-
+    const userPhone = useSelector((state:any) => state.userInfoReducer.userPhoneNumber);
+    console.log(userPhone,"coming from reducer");
     const time = new Date();
     time.setSeconds(time.getSeconds() + 10);
     const { seconds, minutes, restart } = useTimer({

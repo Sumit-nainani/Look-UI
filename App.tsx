@@ -14,14 +14,16 @@ import UserPhone from './src/components/Auth/UserPhone/UserPhone';
 import AuthHeader from './src/components/Header/AuthHeader/AuthHeader';
 import { AuthHeaderText } from './src/constants/text';
 import { AUTH_SCREEN_NUMBER } from './src/constants/common';
-import UserGender from './src/components/Auth/UserGender';
+import UserGender from './src/components/Auth/UserGender/UserGender';
 import AuthOptions from './src/components/Auth/AuthOptions/AuthOptions';
-
+import OnboardingScreenThrid from './src/components/Auth/OnboardingScreenThrid/OnboardingScreenThrid';
+import AppLanding from './src/components/AppLanding/AppLanding';
 export type RootStackParamList = {
   AuthOptions: undefined;
   UserInfo: undefined;
   UserGender: undefined;
   UserPhone: undefined;
+  AppLanding: undefined;
   VerifyOtp: { phoneNumber: string };
 };
 
@@ -30,10 +32,16 @@ const AuthStack = createNativeStackNavigator<RootStackParamList>();
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
-      <AuthStack.Navigator initialRouteName="AuthOptions">
+      <AuthStack.Navigator initialRouteName="AppLanding">
+        {/* <AuthStack.Screen
+          name="OnboardingScreenThrid"
+          component={OnboardingScreenThrid}
+          options={() => ({
+            headerShown: false
+          })} /> */}
         <AuthStack.Screen
-          name="AuthOptions"
-          component={AuthOptions}
+          name="AppLanding"
+          component={AppLanding}
           options={() => ({
             headerShown: false
           })} />

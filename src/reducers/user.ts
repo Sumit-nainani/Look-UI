@@ -11,8 +11,7 @@ export const userInfoReducer = (state = initialState, action:IAction)=>{
     case SET_USER_INFO:
         return{
             ...state,
-            userName: payload.userName,
-            userPhone: payload.userPhone,
+            ...payload,
         }
         default:
             return state
