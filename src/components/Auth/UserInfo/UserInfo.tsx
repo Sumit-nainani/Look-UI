@@ -31,7 +31,7 @@ const UserInfo = () => {
         />
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate(ROUTES.UserGender)}
+        onPress={() => navigation.navigate(ROUTES.UserGender,{userName:userName})}
         style={
           isEnabled
             ? styles.enabledTouchableViewBg

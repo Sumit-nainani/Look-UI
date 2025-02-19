@@ -57,24 +57,6 @@ function App(): React.JSX.Element {
             headerShown: false
           })} />
         <AuthStack.Screen
-          name="OnboardingScreenFirst"
-          component={OnboardingScreenFirst}
-          options={() => ({
-            headerShown: false
-          })} />
-          <AuthStack.Screen
-          name="OnboardingScreenTwo"
-          component={OnboardingScreenTwo}
-          options={() => ({
-            headerShown: false
-          })} />
-        <AuthStack.Screen
-          name="OnboardingScreenThrid"
-          component={OnboardingScreenThrid}
-          options={() => ({
-            headerShown: false
-          })} />
-        <AuthStack.Screen
           name={ROUTES.UserInfo} 
           component={UserInfo}
           options={() => ({

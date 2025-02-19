@@ -2,6 +2,7 @@ import {  useEffect, useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { UserInfoText, UserPhoneText } from '../../../constants/text'
 import { useDispatch } from "react-redux";
+import { RouteProp, useRoute } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { COLORS } from '../../../constants/theme'
 import styles from './styles'
@@ -9,13 +10,18 @@ import axios from "axios";
 import { loadAuthData, saveAuthData } from '../../../storage/authStorage'
 import { setUserInfo } from '../../../actions/actionPerformer/user';
 import { useNavigation } from '@react-navigation/native';
+import { ROUTES } from '../../../constants/routes';
+import { AuthStackParamList, IScreenForParams, UserPhoneParams } from '../../../types/navigation';
 
 const API_URL =
   'https://313f-2401-4900-1cc5-b943-d12d-5d03-9d9f-bf74.ngrok-free.app/register';
 
-const UserPhone: React.FC = () => {
-  const navigation = useNavigation();
 
+type UserPhoneProps = RouteProp<AuthStackParamList, IScreenForParams['UserPhone']>;
+
+const UserPhone: React.FC = () => {
+  const {params} = useRoute<UserPhoneParams>();
+  const navigation = useNavigation();
   const [userPhoneNumber, setUserPhoneNumber] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
   const dispatch = useDispatch();
@@ -23,7 +29,8 @@ const UserPhone: React.FC = () => {
     const createPost = async () => {
         try {
             const newPost = {
-                name: "New name",
+                name: params.userName,
+                gender:params.userGender,
                 phn: `+91${userPhoneNumber}`
             };
 
@@ -57,6 +64,7 @@ const UserPhone: React.FC = () => {
                     text1: "Registration Failed",
                     text2: error.response?.data?.message || "Something went wrong. Please try again.",
                 });
+                navigation.navigate(ROUTES.VerifyOtp, {phoneNumber: userPhoneNumber});
             }else if(error.response.status=='409'){
                 Toast.show({
                     type: "error",
