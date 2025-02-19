@@ -18,7 +18,7 @@ const styles = StyleSheet.create(
         },
         chevrinIcon:{
             width:14,
-            height:26
+            height:24
         },
         rowFlex:{
             flexDirection:'row',

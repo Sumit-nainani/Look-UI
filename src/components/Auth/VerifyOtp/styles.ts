@@ -1,7 +1,6 @@
 
 import { StyleSheet } from "react-native"
 import { COLORS } from "../../../constants/theme"
-import { normalize } from "path/posix";
 
 const styles = StyleSheet.create({
     container: {

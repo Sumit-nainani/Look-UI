@@ -22,14 +22,7 @@ type UserGenderProps = NativeStackScreenProps<RootStackParamList, 'UserGender'>;
 const UserGender = ({ navigation }: UserGenderProps) => {
     const [userGender, setUserGender] = useState<string>('');
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [selectedGender, setSelectedGender] = useState<string | null>(null);
-    const [isModalVisible, setModalVisible] = useState<boolean>(false);
 
-    const handleGenderSelect = (gender: string) => {
-        setSelectedGender(gender);
-        setModalVisible(false);
-        setIsEnabled(true);
-    };
 
     useEffect(() => {
         if (userGender.length && !isEnabled) {
@@ -43,42 +36,21 @@ const UserGender = ({ navigation }: UserGenderProps) => {
         <View style={styles.container}>
             <View>
                 <Text style={styles.enterText}>{UserGenderText.Gender}</Text>
-                <TouchableOpacity
-                    style={styles.textInputBg}
-                    onPress={() => setModalVisible(true)}>
-                    <Text style={styles.inputText}>
-                        {selectedGender || UserGenderText.SelectGender}
-                    </Text>
-                </TouchableOpacity>
-
-                {/* Modal for Gender Options */}
-                <Modal
-                    visible={isModalVisible}
-                    animationType="slide"
-                    transparent
-                    onRequestClose={() => setModalVisible(false)}>
-                    <View style={styles.modalOverlay}>
-                        <View style={styles.modalContent}>
-                            <View style={styles.rowFlex}>
-                                <View style={styles.flexOne}>
-                                    <Text style={styles.modalTitle}>
-                                        {UserGenderText.SelectGender}
-                                    </Text>
-                                </View>
-                                <TouchableOpacity onPress={() => setModalVisible(false)}>
-                                    <Image
-                                        source={Images.closeIcon}
-                                        style={styles.closeIcon}></Image>
-                                </TouchableOpacity>
-                            </View>
-                            <View>
-                                {GENEDER_OPTION.map((key, index) => (
-                                    <TouchableOpacity key={index} style={styles.option} onPress={() => handleGenderSelect(key)}><Text key={index} style={styles.optionText}>{key}</Text></TouchableOpacity>
-                                ))}
-                            </View>
+                {GENEDER_OPTION.map((gender, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={[styles.textInputBg, userGender===gender && styles.borderStyletextInputBg]}
+                        onPress={() => setUserGender(gender)}>
+                        <Text style={styles.inputText}>{gender}</Text>
+                        <View style={[styles.radioButtonStyle, userGender===gender && styles.selectedRadioButtonStyle]}>
+                            {userGender === gender && (
+                                <View
+                                    style={styles.selectedRadioButtonContainer}
+                                />
+                            )}
                         </View>
-                    </View>
-                </Modal>
+                    </TouchableOpacity>
+                ))}
             </View>
             <TouchableOpacity
                 onPress={() => navigation.navigate('UserPhone')}

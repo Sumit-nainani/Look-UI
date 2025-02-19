@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, Image, TouchableOpacity, Animated, BackHandler } from 'react-native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { Images } from '../../../constants';
@@ -15,7 +15,8 @@ const AuthHeader = (props: Props) => {
     const navigation = useNavigation();
     const { headerText, authStackTab } = props;
 
-    const animationRef = useRef(new Animated.Value(0))
+    const animationRef = useRef(new Animated.Value(0));
+    
 
     // useEffect(() => {
     //     Animated.loop(
@@ -56,13 +57,11 @@ const AuthHeader = (props: Props) => {
     return (
         <View style={styles.headerContainer}>
             <View style={styles.rowFlex}>
-                {authStackTab ? (
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={() => authStackTab ? navigation.goBack() : BackHandler.exitApp()}>
                         <Image
                             source={Images.chevrinIcon}
                             style={styles.chevrinIcon}></Image>
                     </TouchableOpacity>
-                ) : null}
                 <View style={styles.textContainer}>
                     <Text style={styles.authHeaderTextStyle}>{headerText}</Text>
                 </View>

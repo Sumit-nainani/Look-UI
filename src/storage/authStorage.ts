@@ -1,28 +1,27 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const AUTH_STORAGE_KEY = "auth"; // where to put this key 
-
-export const saveAuthData = async (authData:any) => {
+export const setLocalStorageData = async (key:string,value:any) => {
   try {
-    await AsyncStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(authData));
+    await AsyncStorage.setItem(key,JSON.stringify(value));
   } catch (error) {
     console.error("Error saving auth data:", error);
   }
 };
 
-export const loadAuthData = async () => {
+export const getLocalStroageData = async (key:string) => {
   try {
-    const authData = await AsyncStorage.getItem(AUTH_STORAGE_KEY);
-    return authData ? JSON.parse(authData) : null;
+    const value = await AsyncStorage.getItem(key);
+    console.log("Raw Stored Value:", value)
+    return value ? JSON.parse(value) : null;
   } catch (error) {
     console.error("Error loading auth data:", error);
     return null;
   }
 };
 
-export const clearAuthData = async () => {
+export const clearLocalStorageData = async (key:string) => {
   try {
-    await AsyncStorage.removeItem(AUTH_STORAGE_KEY);
+    await AsyncStorage.removeItem(key);
   } catch (error) {
     console.error("Error clearing auth data:", error);
   }

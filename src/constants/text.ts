@@ -1,5 +1,3 @@
-import VerifyOtp from "../components/Auth/VerifyOtp"
-
 export const UserInfoText = {
     EnterDetails: "Enter Your Details",
     EnterName: "Enter Your Name",
@@ -38,4 +36,20 @@ export const AuthOptionsText = {
     AlreadyAccount:"Already have an account ?",
     LoginText:"Log in",
     TermAndServiceText:"By signing, you agree to our Terms of service and acknowledge that our privacy policy applies to you"
+}
+
+export const OnboardingScreenThridText = {
+    GetStarted:"Get started",
+    ManageText:`Manage your\n appointments`,
+    NormalText:`cancel without\n unnecessary hustle`
+}
+
+export const OnboardingScreenTwoText = {
+    textOne:`Book anytime\n any where `,
+    textTwo:`schedule your appointments\n at any time that works for you `
+}
+
+export const OnboardingScreenFirstText = {
+    textOne:`Discover local\n professionals`,
+    textTwo:`Find best stylist around you`
 }

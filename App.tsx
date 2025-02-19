@@ -8,6 +8,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Toast from 'react-native-toast-message';
 import VerifyOtp from './src/components/Auth/VerifyOtp/VerifyOtp';
 import UserInfo from './src/components/Auth/UserInfo/UserInfo';
 import UserPhone from './src/components/Auth/UserPhone/UserPhone';
@@ -18,6 +19,10 @@ import UserGender from './src/components/Auth/UserGender/UserGender';
 import AuthOptions from './src/components/Auth/AuthOptions/AuthOptions';
 import OnboardingScreenThrid from './src/components/Auth/OnboardingScreenThrid/OnboardingScreenThrid';
 import AppLanding from './src/components/AppLanding/AppLanding';
+import OnboardingScreenTwo from './src/components/Auth/OnboardingScreenTwo/OnboardingScreenTwo';
+import OnboardingScreenFirst from './src/components/Auth/OnboardingScreenFirst/OnboardingScreenFirst';
+import { toastConfig } from './toastConfig';
+
 export type RootStackParamList = {
   AuthOptions: undefined;
   UserInfo: undefined;
@@ -33,15 +38,27 @@ function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <AuthStack.Navigator initialRouteName="AppLanding">
-        {/* <AuthStack.Screen
-          name="OnboardingScreenThrid"
-          component={OnboardingScreenThrid}
-          options={() => ({
-            headerShown: false
-          })} /> */}
-        <AuthStack.Screen
+      <AuthStack.Screen
           name="AppLanding"
           component={AppLanding}
+          options={() => ({
+            headerShown: false
+          })} />
+        <AuthStack.Screen
+          name="OnboardingScreenFirst"
+          component={OnboardingScreenFirst}
+          options={() => ({
+            headerShown: false
+          })} />
+          <AuthStack.Screen
+          name="OnboardingScreenTwo"
+          component={OnboardingScreenTwo}
+          options={() => ({
+            headerShown: false
+          })} />
+        <AuthStack.Screen
+          name="OnboardingScreenThrid"
+          component={OnboardingScreenThrid}
           options={() => ({
             headerShown: false
           })} />
@@ -88,12 +105,13 @@ function App(): React.JSX.Element {
             header: () => (
               <AuthHeader
                 headerText={AuthHeaderText.VerifyOtp}
-                authStackTab={AUTH_SCREEN_NUMBER[3].VeriftOtp}
+                authStackTab={AUTH_SCREEN_NUMBER[3].VerifyOtp}
               />
             ),
           })}
         />
       </AuthStack.Navigator>
+      <Toast config={toastConfig}/>
     </NavigationContainer>
   );
 }

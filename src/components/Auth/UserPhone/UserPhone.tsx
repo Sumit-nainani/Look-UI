@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { View, Text, TextInput, TouchableOpacity } from 'react-native'
 import { UserInfoText, UserPhoneText } from '../../../constants/text'
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import Toast from 'react-native-toast-message';
 import { COLORS } from '../../../constants/theme'
 import styles from './styles'
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -23,7 +24,6 @@ const UserPhone = ({ navigation }: UserPhoneProps) => {
     const dispatch = useDispatch();
 
     const createPost = async () => {
-        navigation.navigate('VerifyOtp', { phoneNumber: userPhoneNumber });
         try {
             const newPost = {
                 name: "New name",
@@ -33,15 +33,40 @@ const UserPhone = ({ navigation }: UserPhoneProps) => {
             const response = await axios.post(API_URL, newPost);
 
             if (response.data) {
-                saveAuthData({userName:response.data.data.name,userPhoneNumber:response.data.data.phn});
-                const userInfo:IUserInfo = await loadAuthData();
-                console.log(userInfo);
+                saveAuthData({ // should we use await here or not
+                    userName: response.data.data.name,
+                    userPhoneNumber: response.data.data.phn
+                });
+                const userInfo: IUserInfo = await loadAuthData();
                 dispatch(setUserInfo(userInfo));
+                navigation.navigate('VerifyOtp', { phoneNumber: userPhoneNumber });
+                Toast.show({
+                    type: "success",
+                    text1: "Registration Successful",
+                    text2: "You have been registered successfully!",
+                });
             }
-
-            console.log("Post Created:", response.data);
-        } catch (error) {
-            console.error("Error creating post:", error);
+        } catch (error:any) {
+            console.log(error.response.status);
+            if (!error.response) {
+                Toast.show({
+                    type: "error",
+                    text1: "Network Error",
+                    text2: "Please check your internet connection and try again.",
+                });
+            } else if(error.response.status=='404') {
+                Toast.show({
+                    type: "error",
+                    text1: "Registration Failed",
+                    text2: error.response?.data?.message || "Something went wrong. Please try again.",
+                });
+            }else if(error.response.status=='409'){
+                Toast.show({
+                    type: "error",
+                    text1: "User already there",
+                    text2: error.response?.data?.message || "Please login",
+                });
+            }
         }
     };
 
