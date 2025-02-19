@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, Animated, BackHandler } from 'react-native';
-import React, { useEffect, useRef, useState } from 'react';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import React, {  useRef } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Images } from '../../../constants';
 import styles from './styles';
 import { AUTH_SCREEN_NUMBER } from '../../../constants/common';

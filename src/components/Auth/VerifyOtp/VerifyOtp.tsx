@@ -1,14 +1,18 @@
-import { useCallback, useEffect, useState, useRef, memo } from 'react';
+import { useCallback, useState, useRef, memo } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import { UserInfoText, UserPhoneText, VerifyOtpText } from '../../../constants/text';
-import { COLORS } from '../../../constants/theme';
+import { VerifyOtpText } from '../../../constants/text';
 import styles from './styles';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../../App';
 import { useTimer } from 'react-timer-hook';
 import { useSelector } from "react-redux";
+import { useNavigation } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { AuthStackParamList,IScreenForParams } from '../../../types/navigation';
+import { ROUTES } from '../../../constants/routes';
 
-type VerifyOtpProps = NativeStackScreenProps<RootStackParamList, 'VerifyOtp'>;
+type VerifyOtpProps = RouteProp<
+  AuthStackParamList,
+  IScreenForParams['VerifyOtp']
+>;
 
 const OtpTimer = memo(({ onExpire }: { onExpire: () => void }) => {
     const { seconds, minutes } = useTimer({
@@ -19,15 +23,19 @@ const OtpTimer = memo(({ onExpire }: { onExpire: () => void }) => {
     return <Text style={styles.resendText}>{VerifyOtpText.Resend} {minutes}:{seconds < 10 ? `0${seconds}` : seconds}</Text>;
 });
 
-const VerifyOtp = ({ navigation, route }: VerifyOtpProps) => {
-    const otpRef = useRef<string[]>(["", "", "", ""]);
-    const inputs = useRef<TextInput[]>([]);
-    const isEnabled = useRef(false);
-    const [reSendCtaShow, setResendCtaShow] = useState(false);
+const VerifyOtp = () => {
+  const navigation = useNavigation();
+  const {params} = useRoute<VerifyOtpProps>();
 
-    const userPhone = useSelector((state: any) => state.userInfoReducer.userPhoneNumber);
-
-    console.log(userPhone, "coming from reducer");
+  const otpRef = useRef<string[]>(['', '', '', '']);
+  const inputs = useRef<TextInput[]>([]);
+  const isEnabled = useRef(false);
+  const [reSendCtaShow, setResendCtaShow] = useState(false);
+  const userPhone = useSelector(
+    (state: any) => state.userInfoReducer.userPhoneNumber,
+  );
+  console.log(userPhone, 'coming from reducer');
+  
 
     const handleChange = useCallback((text: string, index: number) => {
         otpRef.current[index] = text;
@@ -48,7 +56,7 @@ const VerifyOtp = ({ navigation, route }: VerifyOtpProps) => {
         <View style={styles.container}>
             <View>
                 <Text style={styles.enterText}>
-                    {`${VerifyOtpText.VerifyOtp}${route?.params?.phoneNumber}`}
+                    {`${VerifyOtpText.VerifyOtp}${params?.phoneNumber}`}
                 </Text>
                 <View style={styles.rowFlex}>
                     {otpRef.current.map((key, index) => (
@@ -73,7 +81,7 @@ const VerifyOtp = ({ navigation, route }: VerifyOtpProps) => {
                 </TouchableOpacity>
             ) : (
                 <TouchableOpacity 
-                    onPress={() => navigation.navigate('UserPhone')}
+                    onPress={() => navigation.navigate(ROUTES.UserPhone)}
                     style={isEnabled.current ? styles.enabledTouchableViewBg : styles.disabledTouchableViewBg}
                 >
                     <Text style={isEnabled.current ? styles.enabledRegisterText : styles.disabledRegisterText}>
