@@ -1,36 +1,23 @@
-import { useCallback, useEffect, useState } from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    Modal,
-    FlatList,
-    Image,
-} from 'react-native';
-import { COLORS } from '../../../constants/theme';
+import {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
 import styles from './styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../../App';
 import { UserGenderText } from '../../../constants/text';
-import { Images } from '../../../constants';
 import { GENEDER_OPTION } from '../../../constants/common';
 
-type UserGenderProps = NativeStackScreenProps<RootStackParamList, 'UserGender'>;
 
-
-const UserGender = ({ navigation }: UserGenderProps) => {
+const UserGender = () => {
     const [userGender, setUserGender] = useState<string>('');
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
 
-    useEffect(() => {
-        if (userGender.length && !isEnabled) {
-            setIsEnabled(true);
-        } else if (!userGender.length) {
-            setIsEnabled(false);
-        }
-    }, [userGender]);
+  useEffect(() => {
+    if (userGender.length && !isEnabled) {
+      setIsEnabled(true);
+    } else if (!userGender.length) {
+      setIsEnabled(false);
+    }
+  }, [userGender]);
 
     return (
         <View style={styles.container}>

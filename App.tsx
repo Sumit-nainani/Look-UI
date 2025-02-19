@@ -23,23 +23,17 @@ import OnboardingScreenTwo from './src/components/Auth/OnboardingScreenTwo/Onboa
 import OnboardingScreenFirst from './src/components/Auth/OnboardingScreenFirst/OnboardingScreenFirst';
 import { toastConfig } from './toastConfig';
 
-export type RootStackParamList = {
-  AuthOptions: undefined;
-  UserInfo: undefined;
-  UserGender: undefined;
-  UserPhone: undefined;
-  AppLanding: undefined;
-  VerifyOtp: { phoneNumber: string };
-};
+import { NavigationStackParamList } from './src/types/navigation';
+import { ROUTES } from './src/constants/routes';
 
-const AuthStack = createNativeStackNavigator<RootStackParamList>();
+const AuthStack = createNativeStackNavigator<NavigationStackParamList>();
 
 function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <AuthStack.Navigator initialRouteName="AppLanding">
       <AuthStack.Screen
-          name="AppLanding"
+          name={ROUTES.AppLanding}
           component={AppLanding}
           options={() => ({
             headerShown: false
@@ -63,7 +57,25 @@ function App(): React.JSX.Element {
             headerShown: false
           })} />
         <AuthStack.Screen
-          name="UserInfo"
+          name="OnboardingScreenFirst"
+          component={OnboardingScreenFirst}
+          options={() => ({
+            headerShown: false
+          })} />
+          <AuthStack.Screen
+          name="OnboardingScreenTwo"
+          component={OnboardingScreenTwo}
+          options={() => ({
+            headerShown: false
+          })} />
+        <AuthStack.Screen
+          name="OnboardingScreenThrid"
+          component={OnboardingScreenThrid}
+          options={() => ({
+            headerShown: false
+          })} />
+        <AuthStack.Screen
+          name={ROUTES.UserInfo} 
           component={UserInfo}
           options={() => ({
             header: () => (
@@ -75,7 +87,7 @@ function App(): React.JSX.Element {
           })}
         />
         <AuthStack.Screen
-          name="UserGender"
+          name={ROUTES.UserGender}
           component={UserGender}
           options={() => ({
             header: () => (
@@ -87,7 +99,7 @@ function App(): React.JSX.Element {
           })}
         />
         <AuthStack.Screen
-          name="UserPhone"
+          name={ROUTES.UserPhone}
           component={UserPhone}
           options={() => ({
             header: () => (
@@ -99,7 +111,7 @@ function App(): React.JSX.Element {
           })}
         />
         <AuthStack.Screen
-          name="VerifyOtp"
+          name={ROUTES.VerifyOtp}
           component={VerifyOtp}
           options={() => ({
             header: () => (
