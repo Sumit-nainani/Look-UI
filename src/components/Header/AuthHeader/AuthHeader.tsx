@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, Animated, BackHandler } from 'react-native';
-import React, {  useRef } from 'react';
+import React, { useRef } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Images } from '../../../constants';
 import styles from './styles';
@@ -9,15 +9,16 @@ import { AUTH_SCREEN_NUMBER } from '../../../constants/common';
 interface Props {
     headerText: string;
     authStackTab: number;
+    showStrip: boolean;
 }
 
-const AuthHeader = (props: Props) => {
+const AuthHeader: React.FC<Props> = (props: Props) => {
     const navigation = useNavigation();
-    const { headerText, authStackTab } = props;
+    const { headerText, authStackTab, showStrip } = props;
 
     const animationRef = useRef(new Animated.Value(0));
-    
 
+    // enimation code for sizzer
     // useEffect(() => {
     //     Animated.loop(
     //         Animated.sequence([
@@ -57,24 +58,28 @@ const AuthHeader = (props: Props) => {
     return (
         <View style={styles.headerContainer}>
             <View style={styles.rowFlex}>
-                    <TouchableOpacity onPress={() => authStackTab ? navigation.goBack() : BackHandler.exitApp()}>
-                        <Image
-                            source={Images.chevrinIcon}
-                            style={styles.chevrinIcon}></Image>
-                    </TouchableOpacity>
+                <TouchableOpacity onPress={() => authStackTab === AUTH_SCREEN_NUMBER[0].Name || authStackTab === AUTH_SCREEN_NUMBER[4].Login ? BackHandler.exitApp() : navigation.goBack()}>
+                    <Image
+                        source={Images.chevrinIcon}
+                        style={styles.chevrinIcon}></Image>
+                </TouchableOpacity>
                 <View style={styles.textContainer}>
                     <Text style={styles.authHeaderTextStyle}>{headerText}</Text>
                 </View>
             </View>
-            <View style={styles.rowFlex1}>
+            <View style={showStrip ? styles.rowFlex1 : null}>
                 {AUTH_SCREEN_NUMBER.map((key, index) => (
                     <View
                         key={index}
-                        style={[
-                            styles.horizontalLine,
-                            authStackTab > index ? styles.horizontalLine1 : null,
-                            authStackTab === index ? styles.horizontalLine2 : null,
-                        ]}></View>
+                        style={
+                            showStrip
+                                ? [
+                                    styles.horizontalLine,
+                                    authStackTab > index ? styles.horizontalLine1 : null,
+                                    authStackTab === index ? styles.horizontalLine2 : null,
+                                ] : null
+                        }
+                    ></View>
                 ))}
             </View>
             <View style={styles.imageContainer}>

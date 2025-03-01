@@ -10,55 +10,57 @@ import { ROUTES } from '../../../constants/routes';
 
 type UserGenderProps = RouteProp<AuthStackParamList, IScreenForParams['UserGender']>;
 
-const UserGender = () => {
-    const {params} = useRoute<UserGenderProps>();
-    const navigation = useNavigation();
-    const [userGender, setUserGender] = useState<string>('');
-    const [isEnabled, setIsEnabled] = useState<boolean>(false);
+const UserGender: React.FC = () => {
+  const { params } = useRoute<UserGenderProps>();
+  const navigation = useNavigation();
+  const [userGender, setUserGender] = useState<string>('');
+  const [isEnabled, setIsEnabled] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (userGender.length && !isEnabled) {
+      setIsEnabled(true);
+    } else if (!userGender.length) {
+      setIsEnabled(false);
+    }
+  }, [userGender]);
 
-    useEffect(() => {
-        if (userGender.length && !isEnabled) {
-            setIsEnabled(true);
-        } else if (!userGender.length) {
-            setIsEnabled(false);
-        }
-    }, [userGender]);
-
-    return (
-        <View style={styles.container}>
-            <View>
-                <Text style={styles.enterText}>{UserGenderText.Gender}</Text>
-                {GENEDER_OPTION.map((gender, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={[styles.textInputBg, userGender === gender && styles.borderStyletextInputBg]}
-                        onPress={() => setUserGender(gender)}>
-                        <Text style={styles.inputText}>{gender}</Text>
-                        <View style={[styles.radioButtonStyle, userGender === gender && styles.selectedRadioButtonStyle]}>
-                            {userGender === gender && (
-                                <View
-                                    style={styles.selectedRadioButtonContainer}
-                                />
-                            )}
-                        </View>
-                    </TouchableOpacity>
-                ))}
+  return (
+    <View style={styles.container}>
+      <View>
+        <Text style={styles.enterText}>{UserGenderText.Gender}</Text>
+        {GENEDER_OPTION.map((gender, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[styles.textInputBg, userGender === gender && styles.borderStyletextInputBg]}
+            onPress={() => setUserGender(gender)}
+          >
+            <Text style={styles.inputText}>{gender}</Text>
+            <View
+              style={[
+                styles.radioButtonStyle,
+                userGender === gender && styles.selectedRadioButtonStyle,
+              ]}
+            >
+              {userGender === gender && <View style={styles.selectedRadioButtonContainer} />}
             </View>
-            <TouchableOpacity
-                onPress={() => navigation.navigate(ROUTES.UserPhone,{userName:params.userName,userGender:userGender})}
-                style={
-                    isEnabled
-                        ? styles.enabledTouchableViewBg
-                        : styles.disabledTouchableViewBg
-                }>
-                <Text
-                    style={isEnabled ? styles.enabledNextText : styles.disabledNextText}>
-                    {UserGenderText.Next}
-                </Text>
-            </TouchableOpacity>
-        </View>
-    );
+          </TouchableOpacity>
+        ))}
+      </View>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate(ROUTES.UserPhone, {
+            userName: params.userName,
+            userGender: userGender,
+          })
+        }
+        style={isEnabled ? styles.enabledTouchableViewBg : styles.disabledTouchableViewBg}
+      >
+        <Text style={isEnabled ? styles.enabledNextText : styles.disabledNextText}>
+          {UserGenderText.Next}
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
 };
 
 export default UserGender;

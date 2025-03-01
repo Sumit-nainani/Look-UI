@@ -1,1 +1,1 @@
-export {default} from './AppLanding';
+export { default } from './AppLanding';
