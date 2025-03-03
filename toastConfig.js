@@ -1,6 +1,5 @@
-import { BaseToast,ErrorToast } from 'react-native-toast-message';
+import { BaseToast, ErrorToast } from 'react-native-toast-message';
 
-// Custom Toast Configuration
 export const toastConfig = {
   success: (props) => (
     <BaseToast
@@ -28,7 +27,7 @@ export const toastConfig = {
     <BaseToast
       {...props}
       style={{
-        width:'95%',
+        width: '95%',
         backgroundColor: '#ffe0e0',
         borderLeftColor: 'red',
         borderRadius: 10,

@@ -1,12 +1,12 @@
-import {useEffect, useState} from 'react';
-import {View, Text, TextInput, TouchableOpacity} from 'react-native';
-import {UserInfoText} from '../../../constants/text';
-import {COLORS} from '../../../constants/theme';
+import { useEffect, useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { UserInfoText } from '../../../constants/text';
+import { COLORS } from '../../../constants/theme';
 import styles from './styles';
-import {ROUTES} from '../../../constants/routes';
-import {useNavigation} from '@react-navigation/native';
+import { ROUTES } from '../../../constants/routes';
+import { useNavigation } from '@react-navigation/native';
 
-const UserInfo = () => {
+const UserInfo: React.FC = () => {
   const navigation = useNavigation();
   const [userName, setUserName] = useState<string>('');
   const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -31,16 +31,10 @@ const UserInfo = () => {
         />
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate(ROUTES.UserGender,{userName:userName})}
-        style={
-          isEnabled
-            ? styles.enabledTouchableViewBg
-            : styles.disabledTouchableViewBg
-        }>
-        <Text
-          style={
-            isEnabled ? styles.enabledRegisterText : styles.disabledRegisterText
-          }>
+        onPress={() => navigation.navigate(ROUTES.UserGender, { userName: userName })}
+        style={isEnabled ? styles.enabledTouchableViewBg : styles.disabledTouchableViewBg}
+      >
+        <Text style={isEnabled ? styles.enabledRegisterText : styles.disabledRegisterText}>
           {UserInfoText.Next}
         </Text>
       </TouchableOpacity>

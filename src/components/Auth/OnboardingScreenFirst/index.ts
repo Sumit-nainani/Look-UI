@@ -1,1 +1,1 @@
-export {default} from './OnboardingScreenFirst'
+export { default } from './OnboardingScreenFirst';

@@ -2,6 +2,7 @@ import { NavigationComponent } from '../constants/routes';
 
 interface VerifyOtpParams {
   phoneNumber: string;
+  source?: string;
 }
 interface UserGenderParams {
   userName: string;
@@ -17,14 +18,17 @@ interface IScreenForParams {
   UserPhone: 'UserPhone';
 }
 
-
 type NavigationStackParamList = {
   [NavigationComponent.AuthOptions]: undefined;
+  [NavigationComponent.OnboardingScreenFirst]: undefined;
+  [NavigationComponent.OnboardingScreenSecond]: undefined;
+  [NavigationComponent.OnboardingScreenThrid]: undefined;
   [NavigationComponent.UserInfo]: undefined;
   [NavigationComponent.UserGender]: { userName: string };
   [NavigationComponent.UserPhone]: undefined;
   [NavigationComponent.AppLanding]: undefined;
-  [NavigationComponent.VerifyOtp]: { phoneNumber: string };
+  [NavigationComponent.VerifyOtp]: { phoneNumber: string; source?: string };
+  [NavigationComponent.Login]: undefined;
 };
 
 type AuthStackParamList = {
